@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - SkillSphere LMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 12px 20px;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+
+        .navbar-links a:hover {
+            color: white;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-box {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-left: 5px solid #28a745;
+            border-radius: 6px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .welcome-box h2 {
+            margin: 0 0 6px;
+            color: #343a40;
+        }
+
+        .welcome-box p {
+            color: #6c757d;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 12px;
+            margin-top: 25px;
+        }
+
+        /* Upload Form */
+        .upload-box {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .upload-box form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .upload-box input[type="file"] {
+            padding: 6px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn-green {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-green:hover {
+            background-color: #218838;
+        }
+
+        /* Add Course Form */
+        .form-box {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .form-row input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .btn-blue {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-blue:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-red {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-red:hover {
+            background-color: #c82333;
+        }
+
+        /* Courses Table */
+        .courses-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .courses-table th {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .courses-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .courses-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        #uploadMsg {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #28a745;
+        }
+
+        #courseMsg {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span>SkillSphere LMS — Admin Panel</span>
+        <div class="navbar-links">
+            <span style="color:#adb5bd; font-size:14px;">Hello, <strong style="color:white;"><%= user.name %></strong></span>
+            <a href="/logout" style="color:#f8d7da;">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Welcome Box -->
+        <div class="welcome-box">
+            <h2>Admin Dashboard <span class="badge">Admin</span></h2>
+            <p>Logged in as <strong><%= user.email %></strong>. You can manage courses and upload materials below.</p>
+        </div>
+
+        <!-- Upload PDF -->
+        <div class="section-title">Upload Course Material (PDF)</div>
+        <div class="upload-box">
+            <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" target="uploadFrame">
+                <input type="file" name="file" accept="application/pdf" required>
+                <button type="submit" class="btn-green">Upload PDF</button>
+            </form>
+            <iframe name="uploadFrame" style="display:none;"></iframe>
+            <div id="uploadMsg"></div>
+        </div>
+
+        <!-- Add Course -->
+        <div class="section-title">Add New Course</div>
+        <div class="form-box">
+            <div class="form-row">
+                <input type="text" id="courseName" placeholder="Course name" />
+                <input type="text" id="courseDuration" placeholder="Duration (e.g. 3 weeks)" />
+                <button class="btn-blue" onclick="addCourse()">Add Course</button>
+            </div>
+            <div id="courseMsg"></div>
+        </div>
+
+        <!-- Courses Table -->
+        <div class="section-title">All Courses</div>
+        <table class="courses-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Course Name</th>
+                    <th>Duration</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="coursesBody">
+                <tr><td colspan="4" style="text-align:center; color:#6c757d;">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Load courses on page load
+        loadCourses();
+
+        function loadCourses() {
+            fetch('/api/courses')
+                .then(res => res.json())
+                .then(courses => {
+                    const tbody = document.getElementById('coursesBody');
+                    if (courses.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#6c757d;">No courses yet.</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = courses.map((c, i) =>
+                        `<tr>
+                            <td>${i + 1}</td>
+                            <td>${c.name}</td>
+                            <td>${c.duration}</td>
+                            <td><button class="btn-red" onclick="deleteCourse(${c.id})">Delete</button></td>
+                        </tr>`
+                    ).join('');
+                });
+        }
+
+        function addCourse() {
+            const name = document.getElementById('courseName').value.trim();
+            const duration = document.getElementById('courseDuration').value.trim();
+            const msg = document.getElementById('courseMsg');
+
+            if (!name || !duration) {
+                msg.style.color = 'red';
+                msg.textContent = 'Please fill in both fields.';
+                return;
+            }
+
+            fetch('/api/courses', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, duration })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    msg.style.color = 'red';
+                    msg.textContent = data.error;
+                } else {
+                    msg.style.color = '#28a745';
+                    msg.textContent = 'Course added successfully!';
+                    document.getElementById('courseName').value = '';
+                    document.getElementById('courseDuration').value = '';
+                    loadCourses();
+                }
+            });
+        }
+
+        function deleteCourse(id) {
+            if (!confirm('Delete this course?')) return;
+            fetch(`/api/courses/${id}`, { method: 'DELETE' })
+                .then(() => loadCourses());
+        }
+
+        // Show upload confirmation
+        document.querySelector('[name="uploadFrame"]') &&
+        document.querySelector('[name="uploadFrame"]').addEventListener('load', function () {
+            try {
+                const text = this.contentDocument.body.innerText;
+                if (text) {
+                    const msg = document.getElementById('uploadMsg');
+                    msg.textContent = text;
+                }
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>

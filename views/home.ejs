@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSphere LMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 12px 20px;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+
+        .navbar-links a:hover {
+            color: white;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #6c757d;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .hero-buttons a {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 15px;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .btn-outline:hover {
+            background-color: #e8f0fe;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px;
+            width: 220px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #343a40;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .card p {
+            color: #6c757d;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #adb5bd;
+            font-size: 13px;
+            border-top: 1px solid #dee2e6;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span>SkillSphere LMS</span>
+        <div class="navbar-links">
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+            <a href="/status">Status</a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1>Welcome to SkillSphere LMS</h1>
+        <p>A simple learning management system for students and instructors.</p>
+        <div class="hero-buttons">
+            <a href="/login" class="btn-primary">Login</a>
+            <a href="/register" class="btn-outline">Register</a>
+        </div>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <h3>📚 Courses</h3>
+            <p>Browse and manage available courses via the API.</p>
+        </div>
+        <div class="card">
+            <h3>💬 Real-Time Chat</h3>
+            <p>Chat live with instructors and students using Socket.io.</p>
+        </div>
+        <div class="card">
+            <h3>📁 File Uploads</h3>
+            <p>Instructors can upload PDF materials for students.</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>SkillSphere LMS &copy; 2024 | Built with Node.js, Express &amp; MongoDB</p>
+    </div>
+</body>
+</html>

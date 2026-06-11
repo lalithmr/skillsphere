@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SkillSphere LMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            padding: 12px 20px;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 14px;
+        }
+
+        .navbar-links a:hover {
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-box {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .welcome-box h2 {
+            margin: 0 0 8px;
+            color: #343a40;
+        }
+
+        .welcome-box p {
+            color: #6c757d;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 12px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px;
+            flex: 1;
+            min-width: 180px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .card h4 {
+            margin: 0 0 6px;
+            color: #343a40;
+            font-size: 15px;
+        }
+
+        .card p {
+            color: #6c757d;
+            font-size: 13px;
+            margin: 0 0 12px;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 6px 14px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .card a:hover {
+            background-color: #0069d9;
+        }
+
+        .courses-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        .courses-table th {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .courses-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .courses-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .courses-table tr:hover td {
+            background-color: #f8f9fa;
+        }
+
+        .btn-logout {
+            display: inline-block;
+            padding: 6px 14px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span>SkillSphere LMS</span>
+        <div class="navbar-links">
+            <span style="color:#adb5bd; font-size:14px;">Hello, <strong style="color:white;"><%= user.name %></strong></span>
+            <a href="/logout" style="color:#f8d7da;">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Welcome Box -->
+        <div class="welcome-box">
+            <h2>Welcome back, <%= user.name %>! <span class="badge">Student</span></h2>
+            <p>You are logged in as <strong><%= user.email %></strong>. Browse available courses and materials below.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="section-title">Quick Links</div>
+        <div class="cards">
+            <div class="card">
+                <h4>📚 Courses</h4>
+                <p>View all available courses.</p>
+                <a href="/api/courses" target="_blank">View Courses</a>
+            </div>
+            <div class="card">
+                <h4>📁 Materials</h4>
+                <p>Download uploaded PDF files.</p>
+                <a href="/materials" target="_blank">Browse Files</a>
+            </div>
+            <div class="card">
+                <h4>🔗 API Status</h4>
+                <p>Check if the server is running.</p>
+                <a href="/status" target="_blank">Check Status</a>
+            </div>
+        </div>
+
+        <!-- Available Courses -->
+        <div class="section-title">Available Courses</div>
+        <table class="courses-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Course Name</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody id="coursesBody">
+                <tr>
+                    <td colspan="3" style="text-align:center; color:#6c757d;">Loading courses...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch and display courses from API
+        fetch('/api/courses')
+            .then(res => res.json())
+            .then(courses => {
+                const tbody = document.getElementById('coursesBody');
+                if (courses.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#6c757d;">No courses available.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = courses.map((c, i) =>
+                    `<tr><td>${i + 1}</td><td>${c.name}</td><td>${c.duration}</td></tr>`
+                ).join('');
+            })
+            .catch(() => {
+                document.getElementById('coursesBody').innerHTML =
+                    '<tr><td colspan="3" style="color:red; text-align:center;">Failed to load courses.</td></tr>';
+            });
+    </script>
+</body>
+</html>
